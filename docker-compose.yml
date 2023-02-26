@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: video-creators-postgres
+    image: postgres
+    restart: always
+    ports:
+      - '${POSTGRES_DOCKER_PORT:-5432}:5432'
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_DOCKER_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DOCKER_DB_NAME:-postgres}
+    volumes:
+      - ./postgres_data:/var/lib/postgres/data
