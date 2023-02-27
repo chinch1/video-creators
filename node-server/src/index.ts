@@ -1,7 +1,11 @@
-import express, { NextFunction } from 'express'
+import cors from 'cors'
 import dotenv from 'dotenv'
+import express from 'express'
+
 import connection from './db/connection'
+import Logging from './middleware/logger'
 import creatorsRouter from './routes/creators'
+import loginRouter from './routes/login'
 import videosRouter from './routes/videos'
 
 dotenv.config()
@@ -9,23 +13,21 @@ dotenv.config()
 const PORT = process.env.PORT_DEVELOPMENT || 3000
 const app = express()
 
+app.use(cors())
+
+// Middlewares for parsing
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Middleware for logging
+app.use(Logging)
+
+// Routes
 app.use('/api/videos', videosRouter)
 app.use('/api/creators', creatorsRouter)
+app.use('/api/login', loginRouter)
 
-app.use(
-  (
-    err: Error,
-    _req: express.Request,
-    res: express.Response,
-    _next: NextFunction
-  ) => {
-    res.status(500).json({ message: err.message })
-  }
-)
-
+// Database connection
 connection
   .sync()
   .then(() => {
@@ -35,6 +37,7 @@ connection
     console.log('Error: ', err)
   })
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
