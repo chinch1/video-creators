@@ -5,22 +5,23 @@ import { Creator } from '../models/creator'
 
 export const JWTMiddleware = async (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
   // Get the auth header
   const auth = req.get('Authorization')
-  if (!auth) return res.status(401).json({ message: 'No auth header' })
+  if (!auth) throw { message: 'No auth header', status: 401 }
 
   // Split the auth header into scheme and token
   const [authScheme, token] = auth?.trim().split(' ') ?? []
 
   if (authScheme !== 'Bearer')
-    return res.status(401).json({
+    throw {
       message: `Wrong auth scheme, expected Bearer, given: ${authScheme}`,
-    })
+      status: 401,
+    }
 
-  if (!token) return res.status(401).json({ message: 'No token provided' })
+  if (!token) throw { message: 'No token provided', status: 401 }
 
   // Decode the token
   let decoded: JwtPayload | null = null
@@ -28,25 +29,23 @@ export const JWTMiddleware = async (
   try {
     decoded = jwt.decode(token) as JwtPayload
   } catch {
-    return res.status(401).json({ message: 'Invalid decoded token' })
+    throw { message: 'Invalid decoded token', status: 401 }
   }
 
-  if (!decoded)
-    return res.status(401).json({ message: 'Invalid decoded token' })
+  if (!decoded) throw { message: 'Invalid decoded token', status: 401 }
 
   // Get the creator from the database using the id from the token
   const userId = decoded.id
   const creator = await Creator.findOne({ where: { id: userId } })
 
-  if (!creator?.secret)
-    return res.status(401).json({ message: 'No secret found' })
+  if (!creator?.secret) throw { message: 'No secret found', status: 401 }
 
   // Verify the token using the creator secret
   try {
     jwt.verify(token, creator?.secret)
   } catch {
-    return res.status(401).json({ message: 'Invalid token' })
+    throw { message: 'Invalid token', status: 401 }
   }
 
-  return next()
+  next()
 }
