@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "workspaces": [
-    "node-server"
+    "node-server",
+    "react-client"
   ],
   "scripts": {
     "commit": "sui-mono commit",
