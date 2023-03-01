@@ -6,7 +6,7 @@ import { Creator } from '../models/creator'
 
 export const CreatorLogin = async (req: Request) => {
   const { email, password } = req.body
-  const creator = await Creator.findOne({ where: { email } })
+  const creator: Creator | null = await Creator.findOne({ where: { email } })
 
   const validPassword = !creator
     ? false
@@ -21,6 +21,12 @@ export const CreatorLogin = async (req: Request) => {
       { expiresIn: '5h' }
     )
 
-    return { message: 'Login successful', token, status: 200 }
+    return {
+      message: 'Login successful',
+      creatorId: creator.id,
+      token,
+      photo: creator.photo,
+      status: 200,
+    }
   }
 }

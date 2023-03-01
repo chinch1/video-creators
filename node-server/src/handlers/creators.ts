@@ -13,6 +13,10 @@ export const createCreator = async (req: Request) => {
   // Creating secret
   req.body.secret = crypto.randomBytes(64).toString('base64')
 
+  // Creating photo url
+  req.body.photo = `https://i.pravatar.cc/200?u=${req.body.name}`
+  // or `https://robohash.org/${req.body.name}`
+
   // Creating new creator
   const creator = await handleValidationError(
     async () => await Creator.create(req.body)
