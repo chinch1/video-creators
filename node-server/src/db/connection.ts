@@ -7,10 +7,10 @@ import { Video } from '../models/video'
 const connection = new Sequelize({
   dialect: 'postgres',
   host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'postgres',
-  database: 'video-creators',
+  port: Number(process.env.POSTGRES_DOCKER_USERNAME) || 5432,
+  username: process.env.POSTGRES_DOCKER_USERNAME || 'postgres',
+  password: process.env.POSTGRES_DOCKER_PASSWORD || 'postgres',
+  database: process.env.POSTGRES_DOCKER_DB_NAME || 'video-creators',
   models: [Video, Creator, LikedVideo, CreatorFollower],
   logging: false,
 })

@@ -1,6 +1,7 @@
 'use strict'
 
 const crypto = require('crypto')
+const bcrypt = require('bcrypt')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -9,9 +10,9 @@ module.exports = {
         id: 'facade01-0000-4000-a000-000000000000',
         name: 'John Doe',
         type: 'student',
-        photo: 'https://picsum.photos/200/300',
+        photo: 'https://i.pravatar.cc/200?u=nico',
         email: 'johndoe@gmail.com',
-        password: '123456',
+        password: bcrypt.hashSync('123456', 10),
         secret: crypto.randomBytes(64).toString('base64'),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -20,9 +21,9 @@ module.exports = {
         id: 'facade02-0000-4000-a000-000000000000',
         name: 'John Doe 2',
         type: 'student',
-        photo: 'https://picsum.photos/200/300',
+        photo: 'https://i.pravatar.cc/200?u=Manuel',
         email: 'johndoe2@gmail.com',
-        password: '1234567',
+        password: bcrypt.hashSync('123456', 10),
         secret: crypto.randomBytes(64).toString('base64'),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -31,9 +32,9 @@ module.exports = {
         id: 'facade03-0000-4000-a000-000000000000',
         name: 'John Doe 3',
         type: 'student',
-        photo: 'https://picsum.photos/200/300',
+        photo: 'https://i.pravatar.cc/200?u=Peter',
         email: 'johndoe3@gmail.com',
-        password: '1234568',
+        password: bcrypt.hashSync('123456', 10),
         secret: crypto.randomBytes(64).toString('base64'),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -42,9 +43,9 @@ module.exports = {
         id: 'facade04-0000-4000-a000-000000000000',
         name: 'John Doe 4',
         type: 'student',
-        photo: 'https://picsum.photos/200/300',
+        photo: 'https://i.pravatar.cc/200?u=Cersei',
         email: 'johndoe4@gmail.com',
-        password: '1234569',
+        password: bcrypt.hashSync('123456', 10),
         secret: crypto.randomBytes(64).toString('base64'),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -53,9 +54,9 @@ module.exports = {
         id: 'facade05-0000-4000-a000-000000000000',
         name: 'John Doe 5',
         type: 'student',
-        photo: 'https://picsum.photos/200/300',
+        photo: 'https://i.pravatar.cc/200?u=Tyrion',
         email: 'johndoe5@gmail.com',
-        password: '12345610',
+        password: bcrypt.hashSync('123456', 10),
         secret: crypto.randomBytes(64).toString('base64'),
         createdAt: new Date(),
         updatedAt: new Date(),

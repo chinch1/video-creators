@@ -10,7 +10,7 @@ import videosRouter from './routes/videos'
 
 dotenv.config()
 
-const PORT = process.env.PORT_DEVELOPMENT || 3000
+const PORT = process.env.NODE_BACKEND_PORT_DEVELOPMENT || 3001
 const app = express()
 
 app.use(cors())
