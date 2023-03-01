@@ -22,6 +22,12 @@ export const getAllVideos = async () => {
   return { message: 'Videos retrieved', data: videos, status: 200 }
 }
 
+export const getVideoById = async (req: Request) => {
+  const { id } = req.params
+  const video = await Video.findByPk(id)
+  return { message: 'Video retrieved', data: video, status: 200 }
+}
+
 export const updateVideo = async (req: Request) => {
   const { id } = req.params
   await handleValidationError(
@@ -37,7 +43,7 @@ export const publishVideo = async (req: Request) => {
 
   if (!video) throw { message: 'Video not found', status: 404 }
 
-  video.published = true
+  video.published = !video.published
   await video.save()
 
   return { message: 'Video published', status: 204 }
