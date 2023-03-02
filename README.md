@@ -17,6 +17,10 @@ Run the following command to start the database:
 ```bash
 docker-compose up -d
 ```
+Install the dependencies with the following command:
+```bash
+npm install
+```
 Then run the following command to start the frontend:
 ```bash    
 npm run dev
